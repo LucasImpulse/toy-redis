@@ -1,0 +1,18 @@
+name: Build and Test
+
+on: [push, pull_request]
+
+jobs:
+  build_linux:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+
+    - uses: actions/setup-python@v4
+      with:
+        python-version: "3.11"
+
+    - name: Install and Test
+      run: |
+        pip install . --verbose
+        python -c "import toy_redis; db = toy_redis.Database('test.db'); db.set('key', 'value'); print(db.get('key'))"
