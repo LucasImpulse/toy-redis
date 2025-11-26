@@ -1,0 +1,66 @@
+syntax = "proto3";
+
+package raft;
+
+// service definition
+service RaftNode {
+    // client interaction
+    rpc Set (KeyValue) returns (Status) {}
+    rpc Get (Key) returns (Value) {}
+
+    // raft consensus
+    // TODO: define
+    rpc RequestVote (VoteArgs) returns (VoteReply) {}
+    rpc AppendEntries (EntryArgs) returns (EntryReply) {}
+}
+
+// --- message types ---
+
+message KeyValue {
+    string key = 1;
+    string value = 2;
+}
+
+message Key {
+    string key = 1;
+}
+
+message Value {
+    string value = 1;
+    bool found = 2;
+
+    bool success = 3;
+    string leaderHint = 4;
+}
+
+message Status {
+    bool success = 1;
+    string message = 2;
+}
+
+// placeholders for raft logic
+message VoteArgs {
+    int32 term = 1;             //  candidate's term
+    int32 candidateId = 2;      //  who is asking?
+}
+message VoteReply {
+    int32 term = 1;             // own term for candidate to update itself
+    bool voteGranted = 2;       // true means "you've got my vote"
+}
+message EntryArgs {
+    int32 term = 1;
+    int32 leaderId = 2;
+
+    string key = 3;
+    string value = 4;
+
+    int32 prevLogIndex = 5;
+    int32 prevLogTerm = 6;
+    int32 leaderCommit = 7;
+}
+message EntryReply {
+    int32 term = 1;
+    bool success = 2;
+
+    int32 conflictIndex = 3;
+}
