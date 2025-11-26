@@ -3,7 +3,7 @@
 
 namespace py = pybind11;
 
-PYBIND11_MODULE(toy_redis, m) {
+PYBIND11_MODULE(flashkv, m) {
 	m.doc() = "Custom C++ database engine";
 
 	py::class_<Database>(m, "Database")
