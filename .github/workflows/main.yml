@@ -15,4 +15,4 @@ jobs:
     - name: Install and Test
       run: |
         pip install . --verbose
-        python -c "import toy_redis; db = toy_redis.Database('test.db'); db.set('key', 'value'); print(db.get('key'))"
+        python -c "import flashkv; db = flashkv.Database('test.db'); db.set('key', 'value'); print(db.get('key'))"

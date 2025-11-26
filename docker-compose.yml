@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  node1:
+    build: .
+    container_name: flashkv-node1
+    # host networking or expose ports, bridge is fine for gRPC
+    command: python -m cluster.node --id 1 --port 5000 --peers 5001,5002
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./:/app  # live sync with .db files appearing in project root
+    environment:
+      - PYTHONUNBUFFERED=1
+
+  node2:
+    build: .
+    container_name: flashkv-node2
+    command: python -m cluster.node --id 2 --port 5001 --peers 5000,5002
+    ports:
+      - "5001:5001"
+    volumes:
+      - ./:/app
+    environment:
+      - PYTHONUNBUFFERED=1
+
+  node3:
+    build: .
+    container_name: flashkv-node3
+    command: python -m cluster.node --id 3 --port 5002 --peers 5000,5001
+    ports:
+      - "5002:5002"
+    volumes:
+      - ./:/app
+    environment:
+      - PYTHONUNBUFFERED=1
