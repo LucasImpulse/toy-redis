@@ -3,7 +3,7 @@
 A high-performance, strongly consistent distributed Key-Value store.
 FlashKV combines a **C++17 Log-Structured Merge (LSM)** storage engine with a **Python implementation of the Raft Consensus Algorithm**. It features automatic leader election, log replication, and snapshot persistence to guarantee data durability during network partitions.
 
-![Cluster Failover Demo](docs/demo.mp4)
+![Cluster Failover Demo](docs/demo.gif)
 
 ## Features
 
